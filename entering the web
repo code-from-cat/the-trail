@@ -1,0 +1,173 @@
+// C# program to illustrate the
+// Binary Operator Overloading 
+using System;
+namespace BinaryOverload {
+     
+class Calculator {
+     
+    public int number = 0;
+     
+    // no-argument constructor
+    public Calculator() {}
+     
+     
+    // parameterized constructor
+    public Calculator(int n)
+    {
+        number = n;
+    }
+     
+    // Overloading of Binary "+" operator
+    public static Calculator operator + (Calculator Calc1, 
+                                         Calculator Calc2)
+    {
+        Calculator Calc3 = new Calculator(0);
+        Calc3.number = Calc2.number + Calc1.number;
+        return Calc3;
+    }
+     
+    // function to display result
+    public void display()
+    {
+        Console.WriteLine("{0}", number);
+    }
+}
+ 
+ 
+class CalNum {
+     
+    // Driver Code
+    static void Main(string[] args)
+    {
+         
+        Calculator num1 = new Calculator(200);
+        Calculator num2 = new Calculator(40);
+        Calculator num3 = new Calculator();
+         
+         
+        num3 = num1 + num2;
+         
+        num1.display(); // Displays 200
+         
+        num2.display(); // Displays 40
+         
+        num3.display(); // Displays 240
+         
+    }
+}
+}
+
+
+
+using System;
+using System.IO;
+
+class CopyFile
+{
+    static void Main(string[] args)
+    {
+        string sourceFilePath = @"C:\aaadi\trail.txt";
+        string destinationFilePath = @"C:\aaadi\anothertrail.txt";
+
+        try
+        {
+            using (StreamReader reader = new StreamReader(sourceFilePath))
+            using (StreamWriter writer = new StreamWriter(destinationFilePath))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    writer.WriteLine(line);
+                }
+            }
+
+            Console.WriteLine("File copied successfully!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error copying file: " + ex.Message);
+        }
+
+        Queue<int> q = new Queue<int>();
+        //1> Enqueue
+        q.Enqueue(1);
+        q.Enqueue(2);
+        q.Enqueue(3);
+        //2> Dequeue
+        int dequeuedElement = q.Dequeue();
+        Console.WriteLine("Dequeued = " + dequeuedElement);
+        //3> Peek
+        int peekedElement = q.Peek();
+        Console.WriteLine("Peek = " + peekedElement);
+        //4> clear
+        q.Clear();
+        //5> count
+        int count = q.Count; // count = 0 (after Clear())
+    }
+}
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;//add this name space
+
+namespace WinFormsApp1
+{
+    public partial class Form1 : Form
+    {
+
+        SqlConnection con = new SqlConnection("Data Source=ADITYA;Initial Catalog=shilai;Integrated Security=True;");
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            // string q = "insert into customerdetails(color) values('" +textBox1.Text + "')";
+            // string q = "update customerdetails set color = '"+textBox1.Text+"' where color = 'red'";
+            string q = "delete from customerdetails where color = 'green'";
+            SqlCommand cmd = new SqlCommand(q, con);
+            MessageBox.Show("" + q);
+            int a = cmd.ExecuteNonQuery();
+            if (a > 0)
+            {
+                MessageBox.Show("Inserted  into table");
+            }
+            else
+            {
+                MessageBox.Show("Not inserted into table");
+            }
+
+            con.Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            string q = "Select * from customerdetails where customerid = 2";
+            SqlDataAdapter da = new SqlDataAdapter(q,con);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
+            con.Close();
+
+        }
+    }
+}
